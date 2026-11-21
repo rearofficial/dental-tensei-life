@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>歯科転生ライフ</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap">
+<style>
+:root{--bg:#e8f5f1;--card:#fff;--ink:#12263a;--sub:#4a6075;--acc:#1f8a8a;--gold:#f0b43c;--bad:#d4574e;--soft:#d3ebe5;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1c2a;--card:#182a3d;--ink:#e8f1f7;--sub:#9fb4c6;--acc:#4cc2b8;--gold:#f3c969;--soft:#22384d;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1c2a;--card:#182a3d;--ink:#e8f1f7;--sub:#9fb4c6;--acc:#4cc2b8;--soft:#22384d;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif;line-height:1.8;font-size:16px}
+main{max-width:640px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:clamp(30px,8vw,44px);font-weight:900;line-height:1.25;margin:8px 0 12px;letter-spacing:.02em}
+.sub{color:var(--sub);margin:0 0 16px}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.age{font-weight:900;font-size:22px;background:var(--ink);color:var(--bg);border-radius:999px;padding:0 16px;white-space:nowrap}
+.bar{flex:1;height:10px;border-radius:9px;background:var(--soft);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--acc);transition:width .5s}
+.board{background:var(--card);border:3px solid var(--ink);border-radius:20px;padding:14px 12px 10px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(16,1fr);gap:3px}
+.t{aspect-ratio:4/5;background:#fff;border:2px solid var(--ink);border-radius:45% 45% 55% 55%;transition:all .6s}
+.t.x{background:transparent;border:2px dashed var(--sub);opacity:.35;transform:scale(.8)}
+.cnt{display:flex;justify-content:space-between;font-weight:700;margin-top:8px;font-size:15px}
+.win{background:var(--card);border:3px solid var(--ink);border-radius:20px;padding:18px 18px 20px;box-shadow:0 6px 0 var(--ink)}
+.win p{margin:0 0 12px}
+.who{font-weight:900;color:var(--acc)}
+.ch{display:block;width:100%;text-align:left;font:inherit;font-weight:700;color:var(--ink);background:var(--bg);border:2px solid var(--ink);border-radius:14px;padding:12px 14px;margin-top:10px;cursor:pointer;transition:transform .12s,background .12s}
+.ch:hover{transform:translateY(-2px);background:var(--soft)}
+.ch:focus-visible,.go:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.go{font:inherit;font-weight:900;font-size:17px;color:var(--bg);background:var(--ink);border:0;border-radius:999px;padding:12px 28px;cursor:pointer;margin-top:8px}
+.go.alt{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.memo{background:var(--soft);border-left:6px solid var(--acc);border-radius:10px;padding:10px 14px;margin:12px 0}
+.memo b{color:var(--acc)}
+.up{color:var(--acc);font-weight:900}.down{color:var(--bad);font-weight:900}
+.big{font-size:clamp(44px,14vw,72px);font-weight:900;line-height:1.1;margin:4px 0}
+.tips{padding-left:20px;margin:8px 0}
+.note{font-size:13px;color:var(--sub)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head>
+<body><main id="app"></main>
+<script>
+var S=[
+{a:0,s:"生後6か月。最初の歯が顔を出した。家族があなたの寝かしつけを始める…",c:[
+["寝る前に甘いミルクやジュースを飲ませ続ける",2,"歯が生えた後、寝る前の甘い飲み物をだらだら与えると、哺乳瓶う蝕（ミルクによる虫歯）の原因になります。"],
+["授乳後にガーゼで拭き、歯ブラシに少しずつ慣れさせる",-1,"歯が生え始めたら、早めに口の中のケアに慣れさせておくと、あとの歯みがきがずっと楽になります。"],
+["まだ小さいから、様子を見る",1,"乳歯は生え始めた時からむし歯になります。ケアは生えた日から始まります。"]]},
+{a:3,s:"3歳。乳歯20本がそろった。おやつの時間だ。",c:[
+["好きな時にお菓子を食べてOK",3,"むし歯は『何を食べたか』より『食べる回数と時間』が大事。口の中が酸性に傾く時間が長いほど、歯は溶けやすくなります。"],
+["時間を決めて食べ、そのあとは水かお茶",-1,"おやつは時間と回数を決めるのが基本。食後に水かお茶を飲むだけでも違います。"],
+["ごほうびに甘いジュースを毎日",2,"甘い飲み物は糖と酸のダブルパンチ。飲む回数が増えるほど、歯が溶けやすい時間も増えます。"]]},
+{a:6,s:"6歳。奥に初めての永久歯『6歳臼歯』が生えてきた！ 乳歯の後ろから静かに顔を出す。",c:[
+["仕上げ磨き＋フッ素入り歯みがき粉",-1,"フッ素は歯を強くし、溶けかけた歯の再石灰化を助けます。仕上げ磨きは小学校低学年ごろまでが目安です。"],
+["歯医者さんでシーラント（溝を埋める処置）を相談",-2,"6歳臼歯は溝が深くむし歯になりやすい歯。シーラントで溝を埋めて予防する方法があります。"],
+["自分で磨かせて、任せきりにする",1,"子どもは磨いたつもりでも磨き残しが多め。特に奥歯は大人のチェックが効きます。"]]},
+{a:12,s:"12歳。部活の毎日。喉がかわいた！ 永久歯はほぼ生えそろった。",c:[
+["スポーツドリンクを練習中ずっとちびちび",2,"糖や酸を含む飲み物をちびちび飲むと、歯が長く酸にさらされます。ふだんの水分は水かお茶が基本です。"],
+["水かお茶。帰宅したらしっかり歯みがき",-1,"ふだんの水分補給は水かお茶で。部活後のケアが歯を守ります。"],
+["歯が痛くなるまで歯医者は我慢",2,"むし歯は初期ほど痛みがなく、気づきにくいのが厄介。痛くなる頃には進行していることも多いです。"]]},
+{a:18,s:"18歳。ひとり暮らし開始。夜ふかしの毎日。親知らずも気配を見せ始めた。",c:[
+["眠くて、磨かずに寝る日が多い",3,"寝ている間は唾液が減って、細菌が増えやすい時間。寝る前のケアは特に大切です。"],
+["朝晩ちゃんと歯みがき",0,"毎日磨くのは大きな力。ただ、歯ブラシだけでは歯と歯の間の汚れの多くが残ります。"],
+["歯みがきにデンタルフロスもプラス",-2,"歯と歯の間は歯ブラシが届きにくい場所。フロスや歯間ブラシで補うと、むし歯や歯周病の予防に効果的です。"]]},
+{a:30,s:"30歳。仕事が忙しい。歯科の予約は後回しになりがち…",c:[
+["痛くなるまで行かない",2,"痛みが出てからだと、治療が大がかりになりがち。早めの発見が歯を残す近道です。"],
+["半年〜1年に1回、検診とクリーニング",-2,"定期検診では、むし歯や歯周病の早期発見に加え、自分では取れない歯石も除去できます。"],
+["マウスウォッシュだけで済ます",1,"マウスウォッシュは補助役。歯の汚れ（プラーク）は、ブラシなどで物理的に落とすのが基本です。"]]},
+{a:45,s:"45歳。歯みがきのとき、ブラシに血がつくようになった。",c:[
+["痛くないから放置",3,"歯ぐきの出血は歯周病のサイン。歯周病は痛みが出ないまま進み、成人が歯を失う大きな原因のひとつです。"],
+["歯科で歯周病検査を受ける",-2,"歯周病は早く見つけてケアすれば、進行を抑えられます。検診で歯ぐきの状態を確認しましょう。"],
+["血が出るのが怖くて、強くゴシゴシ磨く",1,"強く磨きすぎると、歯ぐきが下がったり歯がすり減ったりします。軽い力で小さく動かすのがコツ。"]]},
+{a:60,s:"60歳。奥歯が1本、むし歯でダメになり抜けてしまった。",c:[
+["噛めるし、そのまま放っておく",2,"歯が抜けたまま放置すると、隣の歯が傾いたり噛み合わせが崩れたりして、ほかの歯にも負担がかかります。"],
+["入れ歯・ブリッジ・インプラントなどを歯科で相談",-1,"失った歯を補う方法はいくつもあります。早めに相談して、噛み合わせを守りましょう。"],
+["やわらかい食べ物ばかり選ぶ",1,"噛まない生活は、あごの筋力や食事の楽しみを減らします。噛める状態を整えることが大切です。"]]},
+{a:75,s:"75歳。口がかわきやすくなった。ひとりで磨くのが少し大変になってきた。",c:[
+["かかりつけ歯科で定期的にチェック。食後のケアも続ける",-2,"年を重ねると唾液が減り、歯の根元もむし歯になりやすくなります。かかりつけ歯科があると安心です。"],
+["面倒で夜は磨かない日が増える",2,"高齢期のケア不足は、むし歯や歯周病、誤嚥性肺炎のリスクにもつながります。"],
+["入れ歯は洗うだけ、歯みがきはしない",1,"残っている歯と歯ぐきのケアも必要。入れ歯も毎日きれいにして、定期的に調整しましょう。"]]}
+];
+var F=[0,0,.3,.5,.7,.9,1.2,1.5,1.9];
+var G=[["エナメル質の加護","歯の表面がとても強い体質。むし歯になりにくい！",-2],["唾液の泉","唾液がたっぷり出る体質。お口の自浄作用が強い！",-1],["ふつうの歯","特別な力はないが、努力しだいで未来は変わる。",0],["歯並びの試練","歯並びが複雑で磨き残しが出やすい。ケアが腕の見せどころ。",2]];
+var st,app=document.getElementById("app");
+function shuf(){var o=[],i,j,t;for(i=0;i<32;i++)o.push(i);for(i=31;i>0;i--){j=Math.floor(Math.random()*(i+1));t=o[i];o[i]=o[j];o[j]=t}return o}
+function board(){var h='<div class="grid">',k;for(k=0;k<32;k++)h+='<i class="t'+(st.ord.indexOf(k)<st.lost?' x':'')+'"></i>';return h+'</div><div class="cnt"><span>🦷 のこりの歯 '+(32-st.lost)+'本</span><span>目標：80歳で20本</span></div>'}
+function hdr(){var a=S[st.i]?S[st.i].a:80;return '<div class="top"><span class="age">'+a+'歳</span><div class="bar"><i style="width:'+Math.min(100,a/80*100)+'%"></i></div></div><div class="board">'+board()+'</div>'}
+function start(){st={i:0,r:0,lost:0,ord:shuf(),good:0,bad:0};app.innerHTML='<p class="sub">歯みがきの世界でひとつの人生を生きてみよう</p><h1>歯科転生ライフ</h1><div class="win"><p><span class="who">歯の女神</span>「目覚めなさい。あなたは新しい人生へ転生しました。」</p><p>あなたの目標は、<b>80歳になったとき、自分の歯を20本以上残す</b>こと（8020運動）。0歳から80歳まで、9つの場面で選択を重ねます。</p><button class="go" onclick="gift()">女神に会う</button></div><p class="note">楽しみながら歯の知識を学ぶゲームです。診断ではありません。</p>'}
+function gift(){var g=G[Math.floor(Math.random()*G.length)];st.r=g[2];st.g=g[0];app.innerHTML='<div class="win"><p><span class="who">歯の女神</span>「転生の贈り物として、これを授けましょう。」</p><div class="big" style="font-size:28px">✨ '+g[0]+'</div><p>'+g[1]+'</p><button class="go" onclick="show()">転生する</button></div>'}
+function show(){var s=S[st.i],h=hdr()+'<div class="win"><p>'+s.s+'</p><p class="note">'+(st.i<3?'周りの大人の選択で、あなたの歯が決まっていきます。':'あなたの選択は？')+'</p>';s.c.forEach(function(c,k){h+='<button class="ch" onclick="pick('+k+')">'+c[0]+'</button>'});app.innerHTML=h+'</div>'}
+function pick(k){var s=S[st.i],c=s.c[k],before=st.lost,l;st.r+=c[1];l=Math.min(32,Math.floor(Math.max(0,st.r-1)*F[st.i]));st.lost=Math.max(st.lost,l);c[1]<0?st.good++:(c[1]>0&&st.bad++);var n=st.lost-before,tag=c[1]<0?'<span class="up">お口にいい選択！</span>':c[1]>0?'<span class="down">歯にはちょっと危険な選択…</span>':'<span class="up">悪くない選択</span>';
+app.innerHTML=hdr()+'<div class="win"><p><b>「'+c[0]+'」</b></p><p>'+tag+(n>0?' <span class="down">歯が'+n+'本、抜けてしまった。</span>':'')+'</p><div class="memo"><b>歯科メモ</b><br>'+c[2]+'</div><button class="go" onclick="next()">'+(st.i<S.length-1?'次の年代へ':'80歳を迎える')+'</button></div>'}
+function next(){st.i++;st.i<S.length?show():end()}
+function end(){var m=32-st.lost,t,d;if(m>=28){t="歯の賢者";d="80歳でほぼ全部の歯が健在。食事がおいしくて笑顔があふれる晩年です。"}else if(m>=20){t="8020達成！";d="目標クリア。自分の歯で、好きなものをおいしく食べられます。"}else if(m>=10){t="あと一歩の冒険者";d="あと少しで目標でした。今からでも、定期検診とケアで歯を守れます。"}else{t="歯科と歩む旅人";d="歯が少なくなっても、入れ歯やインプラントなど、噛める状態を取り戻す道があります。早めの相談がカギです。"}
+st.i=9;app.innerHTML='<div class="board">'+board()+'</div><div class="win"><p class="note">80歳の誕生日。あなたの結果は…</p><div class="big">'+m+'本</div><p style="font-weight:900;font-size:22px;margin:0 0 8px">'+t+'</p><p>'+d+'</p><div class="memo"><b>現実の人生で、今日からできること</b><ul class="tips"><li>半年〜1年に一度、歯科で検診とクリーニング</li><li>フッ素入り歯みがき粉と、フロスや歯間ブラシ</li><li>歯ぐきの出血や、しみる感じは早めに相談</li></ul></div><button class="go" onclick="start()">もう一度転生する</button> <button class="go alt" onclick="cp()" id="cb">結果をコピー</button></div><p class="note">現実では転生できません。気になることがあれば、かかりつけの歯科医院へ。（このゲームは簡略化したもので、診断ではありません）</p>'}
+function cp(){var x='歯科転生ライフで、80歳の時点で歯が'+(32-st.lost)+'本残りました！';try{navigator.clipboard.writeText(x).then(function(){document.getElementById("cb").textContent="コピーしました"})}catch(e){}}
+start();
+</script></body></html>
